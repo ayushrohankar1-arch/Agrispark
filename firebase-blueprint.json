@@ -1,0 +1,39 @@
+{
+  "entities": {
+    "HistoryItem": {
+      "title": "History Item",
+      "description": "A record of a plant, soil, or water scan",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The user ID who owns this record" },
+        "type": { "type": "string", "enum": ["plant", "soil", "water", "weather"], "description": "The type of scan" },
+        "timestamp": { "type": "string", "format": "date-time", "description": "When the scan was performed" },
+        "details": { "type": "object", "description": "The results of the scan" }
+      },
+      "required": ["uid", "type", "timestamp", "details"]
+    },
+    "User": {
+      "title": "User Profile",
+      "description": "Information about the registered farmer",
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "photoURL": { "type": "string", "format": "uri" },
+        "role": { "type": "string", "enum": ["farmer", "admin"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["displayName", "email", "role", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/history/{historyId}": {
+      "schema": "HistoryItem",
+      "description": "Collection of all scan history across users"
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    }
+  }
+}
